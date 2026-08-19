@@ -1,0 +1,15 @@
+{
+	"name": "saiharsha-adf",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "ab54c8a3-2e73-45d2-8838-74570020cdcd",
+		"tenantId": "23142c4c-ed31-4ccf-8a68-832bb3fb6ede"
+	}
+}
