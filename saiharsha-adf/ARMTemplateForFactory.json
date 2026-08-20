@@ -105,7 +105,8 @@
 								"referenceName": "DS_SQL_ETLMetadata",
 								"type": "DatasetReference",
 								"parameters": {}
-							}
+							},
+							"firstRowOnly": false
 						}
 					},
 					{
@@ -242,6 +243,10 @@
 													}
 												}
 											],
+											"sqlReaderQuery": {
+												"value": "SELECT * FROM [dbo].[@{variables('v_SourceTable')}]",
+												"type": "Expression"
+											},
 											"queryTimeout": "02:00:00",
 											"partitionOption": "None"
 										},
@@ -270,10 +275,7 @@
 										{
 											"referenceName": "DS_SQL_Source_Dynamic",
 											"type": "DatasetReference",
-											"parameters": {
-												"SourceSchema": "dbo",
-												"SourceTable": "Customers"
-											}
+											"parameters": {}
 										}
 									],
 									"outputs": [
