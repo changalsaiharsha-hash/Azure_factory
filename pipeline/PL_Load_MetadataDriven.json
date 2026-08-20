@@ -24,7 +24,8 @@
 					"dataset": {
 						"referenceName": "DS_SQL_ETLMetadata",
 						"type": "DatasetReference"
-					}
+					},
+					"firstRowOnly": false
 				}
 			},
 			{
