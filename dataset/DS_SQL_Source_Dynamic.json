@@ -1,0 +1,29 @@
+{
+	"name": "DS_SQL_Source_Dynamic",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SQL_Source",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"SourceSchema": {
+				"type": "string",
+				"defaultValue": "dbo"
+			},
+			"SourceTable": {
+				"type": "string",
+				"defaultValue": "Customers"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": {
+				"value": "@concat(dataset().SourceSchema, '.', dataset().SourceTable)",
+				"type": "Expression"
+			}
+		}
+	}
+}
