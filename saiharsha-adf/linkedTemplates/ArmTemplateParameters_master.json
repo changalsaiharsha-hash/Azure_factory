@@ -1,0 +1,63 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "saiharsha-adf"
+		},
+		"AzureSqlDatabase1_password": {
+			"value": ""
+		},
+		"LS_ADLS_accountKey": {
+			"value": ""
+		},
+		"LS_ADLS_DataLake_accountKey": {
+			"value": ""
+		},
+		"LS_SQL_Source_password": {
+			"value": ""
+		},
+		"LS_raw_accountKey": {
+			"value": ""
+		},
+		"ls_target_accountKey": {
+			"value": ""
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"value": "harshademosqlserver.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"value": "harsha_sql_db"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"value": "admin2026"
+		},
+		"LS_ADLS_properties_typeProperties_url": {
+			"value": "https://harshastorage5347.dfs.core.windows.net/"
+		},
+		"LS_ADLS_DataLake_properties_typeProperties_url": {
+			"value": "https://harshastorage5347.dfs.core.windows.net/"
+		},
+		"LS_SQL_Source_properties_typeProperties_server": {
+			"value": "harshademosqlserver.database.windows.net"
+		},
+		"LS_SQL_Source_properties_typeProperties_database": {
+			"value": "harsha_sql_db"
+		},
+		"LS_SQL_Source_properties_typeProperties_userName": {
+			"value": "admin2026"
+		},
+		"LS_raw_properties_typeProperties_url": {
+			"value": "https://harshastorage5347.dfs.core.windows.net/"
+		},
+		"ls_target_properties_typeProperties_url": {
+			"value": "https://harshastorage5347.dfs.core.windows.net/"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
