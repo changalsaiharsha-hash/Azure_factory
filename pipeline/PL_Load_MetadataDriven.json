@@ -162,6 +162,7 @@
 											}
 										}
 									],
+									"sqlReaderQuery": "SELECT * FROM [dbo].[@{variables('v_SourceTable')}]",
 									"queryTimeout": "02:00:00",
 									"partitionOption": "None"
 								},
@@ -189,11 +190,7 @@
 							"inputs": [
 								{
 									"referenceName": "DS_SQL_Source_Dynamic",
-									"type": "DatasetReference",
-									"parameters": {
-										"SourceSchema": "@variables('v_SourceSchema')",
-										"SourceTable": "@variables('v_SourceTable')"
-									}
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
