@@ -191,8 +191,8 @@
 									"referenceName": "DS_SQL_Source_Dynamic",
 									"type": "DatasetReference",
 									"parameters": {
-										"SourceSchema": "dbo",
-										"SourceTable": "Customers"
+										"SourceSchema": "@variables('v_SourceSchema')",
+										"SourceTable": "@variables('v_SourceTable')"
 									}
 								}
 							],
