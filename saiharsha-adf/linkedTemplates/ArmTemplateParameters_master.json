@@ -38,6 +38,9 @@
 		"LS_ADLS_DataLake_properties_typeProperties_url": {
 			"value": "https://harshastorage5347.dfs.core.windows.net/"
 		},
+		"LS_HTTP_MockAPI_properties_typeProperties_url": {
+			"value": "https://jsonplaceholder.typicode.com"
+		},
 		"LS_SQL_Source_properties_typeProperties_server": {
 			"value": "harshademosqlserver.database.windows.net"
 		},
