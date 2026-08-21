@@ -146,22 +146,11 @@
 							"type": "JsonReadSettings"
 						}
 					},
-					"sink": {
-						"type": "AzureSqlSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
-					},
 					"enableStaging": false
 				},
 				"inputs": [
 					{
 						"referenceName": "DS_ADLS_Raw_Orders",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DS_SQL_Staging_Orders",
 						"type": "DatasetReference"
 					}
 				]

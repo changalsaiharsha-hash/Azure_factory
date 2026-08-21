@@ -1,0 +1,58 @@
+{
+	"name": "DS_SQL_Staging_Orders_NEW",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SQL_Source",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "order_id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "order_date",
+				"type": "nvarchar"
+			},
+			{
+				"name": "customer_id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "customer_email",
+				"type": "nvarchar"
+			},
+			{
+				"name": "line_item_sku",
+				"type": "nvarchar"
+			},
+			{
+				"name": "line_item_qty",
+				"type": "nvarchar"
+			},
+			{
+				"name": "line_item_price",
+				"type": "nvarchar"
+			},
+			{
+				"name": "raw_payload",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ingest_ts",
+				"type": "datetime2",
+				"scale": 3
+			},
+			{
+				"name": "source_file",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "stg_Orders"
+		}
+	}
+}

@@ -16,15 +16,9 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "JsonSource",
-						"storeSettings": {
-							"type": "AzureBlobFSReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "JsonReadSettings"
-						}
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
 					},
 					"sink": {
 						"type": "AzureSqlSink",
@@ -40,8 +34,8 @@
 									"path": "$['id']"
 								},
 								"sink": {
-									"name": "order_id",
-									"type": "bigint"
+									"name": "OrderID",
+									"physicalType": "bigint"
 								}
 							},
 							{
@@ -49,28 +43,27 @@
 									"path": "$['userId']"
 								},
 								"sink": {
-									"name": "customer_id",
-									"type": "bigint"
-								}
-							},
-							{
-								"source": {
-									"path": "$['Column_1']"
+									"name": "CustomerID",
+									"physicalType": "bigint"
 								}
 							}
 						],
-						"collectionReference": ""
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
 					}
 				},
 				"inputs": [
 					{
-						"referenceName": "DS_ADLS_Raw_Orders",
+						"referenceName": "DS_SQL_Staging_Orders_NEW",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_SQL_Staging_Orders",
+						"referenceName": "DS_SQL_Staging_Orders_NEW",
 						"type": "DatasetReference"
 					}
 				]
