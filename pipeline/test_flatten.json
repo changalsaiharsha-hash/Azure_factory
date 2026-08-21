@@ -52,8 +52,14 @@
 									"name": "customer_id",
 									"type": "bigint"
 								}
+							},
+							{
+								"source": {
+									"path": "$['Column_1']"
+								}
 							}
-						]
+						],
+						"collectionReference": ""
 					}
 				},
 				"inputs": [
