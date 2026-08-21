@@ -1,0 +1,15 @@
+{
+	"name": "pl_ingest_orders_incremental_eip",
+	"properties": {
+		"variables": {
+			"v_lastWatermark": {
+				"type": "String"
+			},
+			"v_rowsExtracted": {
+				"type": "Integer",
+				"defaultValue": 0
+			}
+		},
+		"annotations": []
+	}
+}
