@@ -186,7 +186,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"storedProcedureName": "[dbo].[usp_MergeOrders]"
+					"storedProcedureName": "dbo.usp_MergeOrders"
 				},
 				"linkedServiceName": {
 					"referenceName": "LS_SQL_Source",
