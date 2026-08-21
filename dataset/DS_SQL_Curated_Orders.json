@@ -1,0 +1,56 @@
+{
+	"name": "DS_SQL_Curated_Orders",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_SQL_Source",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "order_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "order_date",
+				"type": "datetime2",
+				"scale": 3
+			},
+			{
+				"name": "customer_id",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "customer_email",
+				"type": "nvarchar"
+			},
+			{
+				"name": "total_qty",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "total_amount",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 4
+			},
+			{
+				"name": "last_updated",
+				"type": "datetime2",
+				"scale": 3
+			},
+			{
+				"name": "is_active",
+				"type": "bit"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Orders_Curated"
+		}
+	}
+}

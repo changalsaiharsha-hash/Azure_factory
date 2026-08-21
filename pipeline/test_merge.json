@@ -1,0 +1,28 @@
+{
+	"name": "test_merge",
+	"properties": {
+		"activities": [
+			{
+				"name": "MergeToCurated",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[usp_MergeOrders]"
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_SQL_Source",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
