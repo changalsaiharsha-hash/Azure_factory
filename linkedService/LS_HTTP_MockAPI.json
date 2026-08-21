@@ -1,0 +1,13 @@
+{
+	"name": "LS_HTTP_MockAPI",
+	"properties": {
+		"description": "Mock REST API for EIP testing",
+		"annotations": [],
+		"type": "HttpServer",
+		"typeProperties": {
+			"url": "https://jsonplaceholder.typicode.com",
+			"enableServerCertificateValidation": true,
+			"authenticationType": "Anonymous"
+		}
+	}
+}
