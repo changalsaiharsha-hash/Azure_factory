@@ -584,7 +584,48 @@
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false
 							},
-							"enableStaging": false
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['userId']"
+										},
+										"sink": {
+											"name": "userid",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"path": "$['id']"
+										},
+										"sink": {
+											"name": "id",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"path": "$['title']"
+										},
+										"sink": {
+											"name": "title",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"path": "$['body']"
+										},
+										"sink": {
+											"name": "body",
+											"type": "String"
+										}
+									}
+								]
+							}
 						},
 						"inputs": [
 							{
@@ -595,7 +636,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "DS_SQL_Staging_Orders_NEW",
+								"referenceName": "FlattenOrders",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -650,20 +691,21 @@
 						"typeProperties": {
 							"storedProcedureName": "[[dbo].[usp_UpdateWatermark]",
 							"storedProcedureParameters": {
-								"@SourceSystem": {
-									"value": "MockAPI"
+								"EntityName": {
+									"value": "",
+									"type": "String"
 								},
-								"@EntityName": {
-									"value": "Orders"
+								"NewWatermark": {
+									"value": "",
+									"type": "String"
 								},
-								"@NewWatermark": {
-									"value": {
-										"value": "@{utcnow()}",
-										"type": "Expression"
-									}
+								"RowsExtracted": {
+									"value": null,
+									"type": "Int64"
 								},
-								"@RowsExtracted": {
-									"value": "100"
+								"SourceSystem": {
+									"value": "",
+									"type": "String"
 								}
 							}
 						},
@@ -692,7 +734,7 @@
 				"[concat(variables('factoryId'), '/datasets/DS_REST_Orders')]",
 				"[concat(variables('factoryId'), '/datasets/DS_ADLS_Raw_Orders')]",
 				"[concat(variables('factoryId'), '/linkedServices/LS_SQL_Source')]",
-				"[concat(variables('factoryId'), '/datasets/DS_SQL_Staging_Orders_NEW')]"
+				"[concat(variables('factoryId'), '/datasets/FlattenOrders')]"
 			]
 		},
 		{
@@ -1536,6 +1578,52 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FlattenOrders')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_SQL_Source",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "userid",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "title",
+						"type": "nvarchar"
+					},
+					{
+						"name": "body",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "FlattenOrders"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_SQL_Source')]"
+			]
 		}
 	]
 }

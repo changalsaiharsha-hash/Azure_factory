@@ -731,271 +731,49 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PL_Load_MetadataDriven')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/FlattenOrders')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
+				"linkedServiceName": {
+					"referenceName": "LS_SQL_Source",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
 					{
-						"name": "Lookup_ETLMetadata",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"sqlReaderQuery": "  SELECT SourceSchema, SourceTable, TargetPath, LoadType, WatermarkColumn \n  FROM ETL_Metadata \n  WHERE IsActive = 1",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "DS_SQL_ETLMetadata",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"firstRowOnly": false
-						}
+						"name": "userid",
+						"type": "int",
+						"precision": 10
 					},
 					{
-						"name": "ForEach_EachMetadata",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Lookup_ETLMetadata",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('Lookup_ETLMetadata').output.value",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Set_SourceSchema",
-									"type": "SetVariable",
-									"dependsOn": [],
-									"policy": {
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"variableName": "v_SourceSchema",
-										"value": {
-											"value": "@item().SourceSchema",
-											"type": "Expression"
-										}
-									}
-								},
-								{
-									"name": "Set_SourceTable",
-									"type": "SetVariable",
-									"dependsOn": [],
-									"policy": {
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"variableName": "v_SourceTable",
-										"value": {
-											"value": "@item().SourceTable",
-											"type": "Expression"
-										}
-									}
-								},
-								{
-									"name": "Set_TargetPath",
-									"type": "SetVariable",
-									"dependsOn": [],
-									"policy": {
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"variableName": "v_TargetPath",
-										"value": {
-											"value": "@item().TargetPath",
-											"type": "Expression"
-										}
-									}
-								},
-								{
-									"name": "Set_LoadType",
-									"type": "SetVariable",
-									"dependsOn": [],
-									"policy": {
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"variableName": "v_LoadType",
-										"value": {
-											"value": "@item().LoadType",
-											"type": "Expression"
-										}
-									}
-								},
-								{
-									"name": "Set_WatermarkColumn",
-									"type": "SetVariable",
-									"dependsOn": [],
-									"policy": {
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"variableName": "v_WatermarkColumn",
-										"value": {
-											"value": "@item().WatermarkColumn",
-											"type": "Expression"
-										}
-									}
-								},
-								{
-									"name": "Copy_ToADLS",
-									"type": "Copy",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"source": {
-											"type": "AzureSqlSource",
-											"additionalColumns": [
-												{
-													"name": "SourceSchema",
-													"value": {
-														"value": "@variables('v_SourceSchema')",
-														"type": "Expression"
-													}
-												},
-												{
-													"name": "SourceTable",
-													"value": {
-														"value": "@variables('v_SourceTable')",
-														"type": "Expression"
-													}
-												}
-											],
-											"sqlReaderQuery": {
-												"value": "SELECT * FROM [dbo].[@{variables('v_SourceTable')}]",
-												"type": "Expression"
-											},
-											"queryTimeout": "02:00:00",
-											"partitionOption": "None"
-										},
-										"sink": {
-											"type": "DelimitedTextSink",
-											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
-											},
-											"formatSettings": {
-												"type": "DelimitedTextWriteSettings",
-												"quoteAllText": true,
-												"fileExtension": ".txt"
-											}
-										},
-										"enableStaging": false,
-										"translator": {
-											"type": "TabularTranslator",
-											"typeConversion": true,
-											"typeConversionSettings": {
-												"allowDataTruncation": true,
-												"treatBooleanAsNumber": false
-											}
-										}
-									},
-									"inputs": [
-										{
-											"referenceName": "DS_SQL_Source_Dynamic",
-											"type": "DatasetReference",
-											"parameters": {
-												"SourceSchema": "dbo",
-												"SourceTable": "Customers"
-											}
-										}
-									],
-									"outputs": [
-										{
-											"referenceName": "DS_ADLS_Target",
-											"type": "DatasetReference",
-											"parameters": {
-												"TargetPath": {
-													"value": "@variables('v_TargetPath')",
-													"type": "Expression"
-												}
-											}
-										}
-									]
-								}
-							]
-						}
+						"name": "id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "title",
+						"type": "nvarchar"
+					},
+					{
+						"name": "body",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"p_SourceSchema": {
-						"type": "string",
-						"defaultValue": "dbo"
-					},
-					"p_SourceTable": {
-						"type": "string",
-						"defaultValue": "Customers"
-					},
-					"p_TargetPath": {
-						"type": "string",
-						"defaultValue": "/raw/customers"
-					},
-					"p_LoadType": {
-						"type": "string",
-						"defaultValue": "Full"
-					}
-				},
-				"variables": {
-					"v_SourceSchema": {
-						"type": "String"
-					},
-					"v_SourceTable": {
-						"type": "String"
-					},
-					"v_TargetPath": {
-						"type": "String"
-					},
-					"v_LoadType": {
-						"type": "String"
-					},
-					"v_WatermarkColumn": {
-						"type": "String"
-					}
-				},
-				"annotations": []
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "FlattenOrders"
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DS_SQL_ETLMetadata')]",
-				"[concat(variables('factoryId'), '/datasets/DS_SQL_Source_Dynamic')]",
-				"[concat(variables('factoryId'), '/datasets/DS_ADLS_Target')]"
+				"[concat(variables('factoryId'), '/linkedServices/LS_SQL_Source')]"
 			]
 		}
 	]
