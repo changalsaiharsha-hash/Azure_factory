@@ -270,7 +270,7 @@
 						},
 						"SourceSystem": {
 							"value": "",
-							"type": "String"
+							"type": "Timespan"
 						}
 					}
 				},
