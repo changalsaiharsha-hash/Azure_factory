@@ -151,7 +151,32 @@
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"path": "$['userId']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['id']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['title']"
+								}
+							},
+							{
+								"source": {
+									"path": "$['body']"
+								}
+							}
+						]
+					}
 				},
 				"inputs": [
 					{
@@ -187,50 +212,6 @@
 				"userProperties": [],
 				"typeProperties": {
 					"storedProcedureName": "dbo.usp_MergeOrders"
-				},
-				"linkedServiceName": {
-					"referenceName": "LS_SQL_Source",
-					"type": "LinkedServiceReference"
-				}
-			},
-			{
-				"name": "UpdateWatermark",
-				"type": "SqlServerStoredProcedure",
-				"dependsOn": [
-					{
-						"activity": "MergeToCurated",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"storedProcedureName": "[dbo].[usp_UpdateWatermark]",
-					"storedProcedureParameters": {
-						"@SourceSystem": {
-							"value": "MockAPI"
-						},
-						"@EntityName": {
-							"value": "Orders"
-						},
-						"@NewWatermark": {
-							"value": {
-								"value": "@{utcnow()}",
-								"type": "Expression"
-							}
-						},
-						"@RowsExtracted": {
-							"value": "100"
-						}
-					}
 				},
 				"linkedServiceName": {
 					"referenceName": "LS_SQL_Source",
