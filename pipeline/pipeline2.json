@@ -256,6 +256,10 @@
 				"typeProperties": {
 					"storedProcedureName": "[dbo].[usp_UpdateWatermark]",
 					"storedProcedureParameters": {
+						"@SourceSystem": {
+							"value": "SourceAPI",
+							"type": "String"
+						},
 						"@EntityName": {
 							"value": "Orders",
 							"type": "String"
@@ -264,7 +268,7 @@
 							"value": "@utcnow()",
 							"type": "String"
 						},
-						"Value": {
+						"\t@RowsExtracted": {
 							"value": "1000",
 							"type": "Int64"
 						}
