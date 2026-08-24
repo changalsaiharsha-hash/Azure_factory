@@ -158,21 +158,37 @@
 							{
 								"source": {
 									"path": "$['userId']"
+								},
+								"sink": {
+									"name": "userid",
+									"type": "Int32"
 								}
 							},
 							{
 								"source": {
 									"path": "$['id']"
+								},
+								"sink": {
+									"name": "id",
+									"type": "Int32"
 								}
 							},
 							{
 								"source": {
 									"path": "$['title']"
+								},
+								"sink": {
+									"name": "title",
+									"type": "String"
 								}
 							},
 							{
 								"source": {
 									"path": "$['body']"
+								},
+								"sink": {
+									"name": "body",
+									"type": "String"
 								}
 							}
 						]
@@ -186,7 +202,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "DS_SQL_Staging_Orders_NEW",
+						"referenceName": "FlattenOrders",
 						"type": "DatasetReference"
 					}
 				]
@@ -212,6 +228,47 @@
 				"userProperties": [],
 				"typeProperties": {
 					"storedProcedureName": "dbo.usp_MergeOrders"
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_SQL_Source",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "UpdateWatermark",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "MergeToCurated",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[usp_UpdateWatermark]",
+					"storedProcedureParameters": {
+						"@EntityName": {
+							"value": "Orders",
+							"type": "String"
+						},
+						"@NewWatermark": {
+							"value": "@utcnow()",
+							"type": "String"
+						},
+						"Value": {
+							"value": "1000",
+							"type": "Int64"
+						}
+					}
 				},
 				"linkedServiceName": {
 					"referenceName": "LS_SQL_Source",
