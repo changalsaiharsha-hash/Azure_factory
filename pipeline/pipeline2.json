@@ -265,7 +265,7 @@
 							"type": "String"
 						},
 						"RowsExtracted": {
-							"value": "",
+							"value": null,
 							"type": "Int64"
 						},
 						"SourceSystem": {
