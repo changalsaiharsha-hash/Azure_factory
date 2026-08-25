@@ -630,12 +630,74 @@
 								},
 								"SourceSystem": {
 									"value": "",
-									"type": "String"
+									"type": "Timespan"
 								}
 							}
 						},
 						"linkedServiceName": {
 							"referenceName": "LS_SQL_Source",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "LogError",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "UpdateWatermark",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[usp_LogError]",
+							"storedProcedureParameters": {
+								"ActivityName": {
+									"value": "UpdateWatermark",
+									"type": "String"
+								},
+								"AdditionalInfo": {
+									"value": "",
+									"type": "String"
+								},
+								"ErrorCode": {
+									"value": {
+										"value": "@activity('UpdateWatermark').error.errorCode",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"ErrorMessage": {
+									"value": {
+										"value": "@activity('UpdateWatermark').error.message",
+										"type": "Expression"
+									},
+									"type": "String"
+								},
+								"PipelineName": {
+									"value": "pipeline1",
+									"type": "String"
+								},
+								"RunId": {
+									"value": {
+										"value": "@pipeline().RunId",
+										"type": "Expression"
+									},
+									"type": "Guid"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDatabase1",
 							"type": "LinkedServiceReference"
 						}
 					}
