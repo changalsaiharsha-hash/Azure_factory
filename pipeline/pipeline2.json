@@ -270,7 +270,7 @@
 						},
 						"SourceSystem": {
 							"value": "",
-							"type": "Timespan"
+							"type": "String"
 						}
 					}
 				},
@@ -310,11 +310,17 @@
 							"type": "String"
 						},
 						"ErrorCode": {
-							"value": "@activity('UpdateWatermark').error.errorCode",
+							"value": {
+								"value": "@activity('UpdateWatermark').error.errorCode",
+								"type": "Expression"
+							},
 							"type": "String"
 						},
 						"ErrorMessage": {
-							"value": "@activity('UpdateWatermark').error.message",
+							"value": {
+								"value": "@activity('UpdateWatermark').error.message",
+								"type": "Expression"
+							},
 							"type": "String"
 						},
 						"PipelineName": {
@@ -322,7 +328,10 @@
 							"type": "String"
 						},
 						"RunId": {
-							"value": "@pipeline().RunId",
+							"value": {
+								"value": "@pipeline().RunId",
+								"type": "Expression"
+							},
 							"type": "Guid"
 						}
 					}
